@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Workforce Projection Analysis - Malawi</title>
+  <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          line-height: 1.6;
+          color: #333;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          padding: 20px;
+        }
+        
+        .container {
+          max-width: 1400px;
+          margin: 0 auto;
+          background: white;
+          border-radius: 20px;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+          overflow: hidden;
+        }
+        
+        .country-selector {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          padding: 15px 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 15px;
+          border-bottom: 3px solid rgba(255,255,255,0.3);
+        }
+        
+        .country-selector label {
+          color: white;
+          font-size: 0.9em;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+        
+        .country-selector select {
+          padding: 8px 16px;
+          font-size: 1em;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          border: 2px solid white;
+          border-radius: 8px;
+          background: white;
+          color: #667eea;
+          font-weight: 600;
+          cursor: pointer;
+          min-width: 200px;
+          transition: all 0.3s ease;
+        }
+        
+        .country-selector select:hover {
+          background: #f8f9fa;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .country-selector select:focus {
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+        }
+        
+        .nav-tabs {
+          display: flex;
+          background: #f8f9fa;
+          border-bottom: 3px solid #667eea;
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+        }
+        
+        .nav-tab {
+          flex: 1;
+          padding: 20px;
+          text-align: center;
+          cursor: pointer;
+          background: #f8f9fa;
+          border: none;
+          font-size: 16px;
+          font-weight: 600;
+          color: #666;
+          transition: all 0.3s ease;
+          border-bottom: 4px solid transparent;
+        }
+        
+        .nav-tab:hover {
+          background: #e9ecef;
+          color: #667eea;
+        }
+        
+        .nav-tab.active {
+          background: white;
+          color: #667eea;
+          border-bottom: 4px solid #667eea;
+        }
+        
+        .tab-content {
+          display: none;
+        }
+        
+        .tab-content.active {
+          display: block;
+          animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-section {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 60px 40px;
+          text-align: center;
+        }
+        
+        .hero-section h1 {
+          font-size: 2.5em;
+          margin-bottom: 15px;
+          font-weight: 700;
+        }
+        
+        .hero-section .subtitle1 {
+          font-size: 1.5em;
+          opacity: 0.95;
+          margin-bottom: 10px;
+        }
+        
+        .hero-section .subtitle2 {
+          font-size: 1.2em;
+          opacity: 0.95;
+          margin-bottom: 10px;
+          color: #FFDD57;
+          background-color: rgba(255, 85, 85, 0.2);
+          border: 2px solid #FFAA33;
+          padding: 8px 12px;
+          border-radius: 8px;
+          display: inline-block;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        
+        .hero-section .subtitle {
+          font-size: 1em;
+          opacity: 0.95;
+          margin-bottom: 10px;
+        }
+        
+        .hero-section .stats {
+          display: flex;
+          justify-content: center;
+          gap: 60px;
+          margin-top: 30px;
+          flex-wrap: wrap;
+        }
+        
+        .stat-box {
+          background: rgba(255,255,255,0.15);
+          padding: 20px 40px;
+          border-radius: 15px;
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .stat-label {
+          font-size: 0.9em;
+          opacity: 0.9;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+        
+        .stat-value {
+          font-size: 2em;
+          font-weight: 700;
+          margin-top: 5px;
+        }
+        
+        .section {
+          margin-bottom: 50px;
+          padding: 40px;
+        }
+        
+        .section-title {
+          font-size: 1.8em;
+          color: #667eea;
+          margin-bottom: 20px;
+          padding-bottom: 10px;
+          border-bottom: 3px solid #667eea;
+        }
+        
+        .chart-container {
+          background: #f8f9fa;
+          padding: 30px;
+          border-radius: 15px;
+          margin-bottom: 30px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .chart-container iframe {
+          border: none;
+          width: 100%;
+          height: 600px;
+          border-radius: 10px;
+        }
+        
+        .two-column {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 30px;
+        }
+        
+        @media (max-width: 968px) {
+          .two-column {
+            grid-template-columns: 1fr;
+          }
+          .hero-section .stats {
+            flex-direction: column;
+            gap: 20px;
+          }
+        }
+        
+        .methodology-content {
+          font-size: 1.05em;
+          line-height: 1.8;
+          padding: 40px;
+        }
+        
+        .methodology-content h1 {
+          color: #667eea;
+          font-size: 2em;
+          margin-bottom: 20px;
+        }
+        
+        .methodology-content h2 {
+          color: #667eea;
+          margin-top: 35px;
+          margin-bottom: 15px;
+          font-size: 1.5em;
+        }
+        
+        .methodology-content h3 {
+          color: #764ba2;
+          margin-top: 25px;
+          margin-bottom: 12px;
+          font-size: 1.2em;
+        }
+        
+        .methodology-content h4 {
+          color: #0066cc;
+          margin-bottom: 10px;
+          font-size: 1.1em;
+        }
+        
+        .methodology-content ul, .methodology-content ol {
+          margin-left: 25px;
+          margin-bottom: 15px;
+        }
+        
+        .methodology-content li {
+          margin-bottom: 8px;
+        }
+        
+        .methodology-content code {
+          background: #f1f3f5;
+          padding: 2px 6px;
+          border-radius: 4px;
+          font-family: 'Courier New', monospace;
+          font-size: 0.95em;
+        }
+        
+        .data-source {
+          background: #e7f3ff;
+          padding: 20px;
+          border-radius: 10px;
+          margin: 20px 0;
+          border-left: 5px solid #0066cc;
+        }
+        
+        .data-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 20px 0;
+          background: white;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+          background: #667eea;
+          color: white;
+          padding: 12px;
+          text-align: left;
+          font-weight: 600;
+          font-size: 0.95em;
+        }
+        
+        .data-table td {
+          padding: 10px 12px;
+          border-bottom: 1px solid #e9ecef;
+          font-size: 0.95em;
+        }
+        
+        .data-table tr:last-child td {
+          border-bottom: none;
+        }
+        
+        .data-table tr:nth-child(even) {
+          background: #f8f9fa;
+        }
+        
+        .table-caption {
+          font-weight: 600;
+          color: #495057;
+          margin: 25px 0 10px 0;
+          font-size: 1em;
+        }
+        
+        .formula {
+          text-align: center;
+          font-size: 1.1em; 
+          font-weight: 700; 
+          color: #333; 
+          background: #f1f3f5; 
+          padding: 25px;
+          margin: 30px auto; 
+          border-radius: 10px;
+          max-width: 80%; 
+          border: 2px solid #667eea; 
+        }
+      </style>
+</head>
+<html>
+  <body>
+    <div class="container">
+      <div class="country-selector">
+        <label>SELECT COUNTRY:</label>
+        <select id="countrySelect" onchange="navigateToCountry(this.value)">
+          <option value="bj">Benin</option>
+          <option value="gn">Guinea</option>
+          <option value="ci">Ivory Coast</option>
+          <option value="ls">Lesotho</option>
+          <option value="mw" selected>Malawi</option>
+          <option value="sl">Sierra Leone</option>
+        </select>
+      </div>
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showTab(&#39;overview&#39;)">Overview</button>
+        <button class="nav-tab" onclick="showTab(&#39;methodology&#39;)">Methodology</button>
+      </div>
+      <div id="overview" class="tab-content active">
+        <div class="hero-section">
+          <h1>Energy Sector Workforce Analysis &amp; Projection: Malawi</h1>
+          <div class="subtitle1">Scenario: 100% Energy Access in 10 Years</div>
+          <div class="subtitle2">PRELIMINARY AND INCOMPLETE</div>
+          <div class="subtitle">
+            <p>This Version: Harshil Sahai, December 2025</p>
+          </div>
+          <div class="stats">
+            <div class="stat-box">
+              <div class="stat-label">Population to Connect</div>
+              <div class="stat-value">23.6 Million</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Infrastructure Investment Required</div>
+              <div class="stat-value">$5.5 Billion</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Workforce Required</div>
+              <div class="stat-value">131,567 FTE/Year</div>
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          <h2 class="section-title">Required Investment &amp; Workforce by Technology</h2>
+          <div class="two-column">
+            <div class="chart-container">
+              <iframe src="plots/cost_pie_mw.html" height="600px"></iframe>
+            </div>
+            <div class="chart-container">
+              <iframe src="plots/jobs_pie_mw.html" height="600px"></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          <h2 class="section-title">Required Workforce by Skill Tier &amp; Job Role</h2>
+          <div>
+            <div class="chart-container">
+              <iframe src="plots/skill_bar_overview_mw.html" height="600px"></iframe>
+            </div>
+            <div class="chart-container">
+              <iframe src="plots/role_plot_mw.html" height="600px"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="methodology" class="tab-content">
+        <div class="methodology-content">
+          <h1>Methodology</h1>
+          <h2>1. Overview</h2>
+          <p>This analysis estimates the investment and annual workforce required to achieve full household electrification in Ivory Coast over a 10-year program (split over two periods, Years 1–5 and 6–10). It integrates least-cost capacity and grid expansion outputs from the Global Electrification Platform (GEP) with technology- and Africa-specific employment factors and occupational shares to produce FTE estimates by technology, phase, skill tier, and job role.</p>
+          <h2>2. Technology Grouping</h2>
+          <p>Least-cost energy access infrastructure deployment across Africa is largely driven by four main technology groups:</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Technology Group</th>
+                <th>Included Technologies</th>
+                <th>Deployment Context</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Standalone Solar</td>
+                <td>Solar Home Systems (SHS)</td>
+                <td>Off-grid, single-home applications</td>
+              </tr>
+              <tr>
+                <td>Mini-grid PV Hybrid</td>
+                <td>Small-scale solar with battery/diesel backup</td>
+                <td>Off-grid, community-level applications</td>
+              </tr>
+              <tr>
+                <td>Mini-grid Wind Hybrid</td>
+                <td>Small-scale wind with battery/diesel backup</td>
+                <td>Off-grid, community-level applications</td>
+              </tr>
+              <tr>
+                <td>Mini-grid Hydro</td>
+                <td>Small-scale hydropower systems</td>
+                <td>Off-grid, community-level applications</td>
+              </tr>
+              <tr>
+                <td>Grid Extension</td>
+                <td>Transmission &amp; distribution lines (LV/MV/HV)</td>
+                <td>On-grid, national scale</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>3. Data Sources</h2>
+          <p>Data for the analysis is drawn from three main streams: Global Electrification Platform (GEP) outputs for capacity/line additions, and technology-specific studies for Employment Factors &amp; Occupational Shares.</p>
+          <div class="data-source">
+            <h4>3.1 Word Bank Global Electrification Platform (GEP)</h4>
+            <p>Provides investment costs, capacity additions (MW), and grid expansion (KM) by technology and year from OnSSET-based least-cost planning models to achieve universal energy access.</p>
+          </div>
+          <div class="data-source">
+            <h4>3.2 Employment Factors (Jobs per MW or KM)</h4>
+            <ul>
+              <li><strong>T&amp;D Lines:</strong> Derived from Australian renewable energy infrastructure employment studies (Rutovitz et al. 2025), validated against past projects and projections in South Africa (NBI 2024).</li>
+              <li><strong>Solar Home Systems &amp; Minigrids:</strong> Calculated from Power for All (2022), which is based on direct surveys across Kenya, Ethiopia, Nigeria, and Uganda.</li>
+            </ul>
+          </div>
+          <div class="data-source">
+            <h4>3.3 Occupational Shares (Job Distribution by Role)</h4>
+            <ul>
+              <li><strong>T&amp;D Lines &amp; Minigrids:</strong> Sourced primarily from Australian infrastructure occupational shares, with utility-scale solar shares assumed to approximate minigrid PV.</li>
+              <li><strong>Solar Home Systems (SHS):</strong> Mapped using the GOGLA (2018) regional workforce breakdown (for sales, management, etc.), supplemented by IRENA (2024) survey data for construction/O&amp;M splits.</li>
+            </ul>
+          </div>
+          <h2>4. Calculation Methodology</h2>
+          <h3>4.1 Estimate infrastructure needed to reach 100% access</h3>
+          <p>For each 5-year period (Years 1-5 and Years 6-10):</p>
+          <ul>
+            <li>
+              <strong>Generation:</strong>
+               Sum of new capacity additions (MW) by technology
+            </li>
+            <li>
+              <strong>Grid:</strong>
+               Sum of line additions (KM) by voltage level (LV, MV, HV)
+            </li>
+          </ul>
+          <h3>4.2 Compute workforce needed to build required infrastructure</h3>
+          <p>The core formula for calculating workforce needs:</p>
+          <div class="formula">Annual Jobs Required = Capacity Required × Employment Factor × Occupational Share</div>
+          <p>
+            <strong>Where:</strong>
+          </p>
+          <ul>
+            <li>
+              <strong>Capacity Required:</strong>
+               MW for generation or KM for grid infrastructure
+            </li>
+            <li>
+              <strong>Employent Factor:</strong>
+               Technology-specific jobs per unit (jobs/MW or jobs/KM)
+            </li>
+            <li>
+              <strong>Occupational Share:</strong>
+               Proportion of total jobs in each role category
+            </li>
+          </ul>
+          <h2>5. Skill Level Classification</h2>
+          <p>Jobs are categorized into five skill tiers based on required qualifications and responsibilities:</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Skill Tier</th>
+                <th>Key Roles</th>
+                <th>Required Qualification/Experience</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Low: Laborers &amp; Admin</strong>
+                </td>
+                <td>General Laborers, Construction Labourers, Admin Staff, Storepersons, SHS Customer Service</td>
+                <td>Basic education</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Low-Medium: Machine Operators &amp; Sales</strong>
+                </td>
+                <td>Truck Drivers, Machine Operators, SHS Sales &amp; Distribution</td>
+                <td>Vocational training / on-the-job experience</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Medium: Trades &amp; Technicians</strong>
+                </td>
+                <td>Electricians, Lineworkers, Plumbers, Metal Trades, Technicians, SHS Technicians</td>
+                <td>Technical training / certification and trades experience</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Medium-High: Professionals</strong>
+                </td>
+                <td>IT Professionals, Finance/Policy Professionals, Construction Managers, Operations/Production Managers, Business/Procurement Managers, Control Room Operators</td>
+                <td>University degree and relevant professional experience</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>High: Engineers &amp; Senior Mgmt</strong>
+                </td>
+                <td>Executives &amp; Senior Managers, Civil/Electrical/Mechanical/Structural/Geotechnical Engineers, Quantity Surveyors, Engineering Managers, Telecommunications Engineers</td>
+                <td>Advanced degrees and extensive specialized experience</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>6. Key Assumptions &amp; Limitations</h2>
+          <h3>Assumptions</h3>
+          <ul>
+            <li>Employment factors do not fall with time (low productivity increase scenario).</li>
+            <li>Construction period is 5 years for each capacity addition phase.</li>
+            <li>Occupational distributions remain stable across the projection period.</li>
+            <li>Note: No country-specific productivity adjustment: all employment factors come from or are validated against Africa-specific estimates.</li>
+          </ul>
+          <h3>Limitations</h3>
+          <ul>
+            <li>Employment factors may not fully capture local labor market conditions.</li>
+            <li>Does not account for skills availability or training requirements.</li>
+            <li>Manufacturing and supply chain jobs are excluded (focus on deployment only).</li>
+            <li>Does not model workforce transitions between construction and O&amp;M phases.</li>
+            <li>Regional variations within countries are not captured.</li>
+          </ul>
+          <h2>7. Scenario Parameters &amp; Assumptions</h2>
+          <h3>7.1 Scenario Configuration</h3>
+          <p>This analysis uses the following scenario configuration:</p>
+          <ul>
+            <li>
+              <strong>Demand Level:</strong>
+               
+              Poverty (Tier 1)
+            </li>
+            <li>
+              <strong>Energy Use:</strong>
+               
+              Residential Only
+            </li>
+            <li>
+              <strong>Carbon Pricing:</strong>
+               
+              No Carbon Pricing
+            </li>
+            <li>
+              <strong>PV Cost Assumption:</strong>
+               
+              Expected PV Costs
+            </li>
+            <li>
+              <strong>Connection Capacity:</strong>
+               
+              Capped Annual Connections
+            </li>
+            <li>
+              <strong>Rollout Strategy:</strong>
+               
+              Least-Cost Technology Selection
+            </li>
+          </ul>
+          <p>
+            Scenario Code: 
+            <code>0_1_0_0_1_0</code>
+          </p>
+          <h3>7.2 Employment Factor Assumptions</h3>
+          <p>Employment factors are derived from Australian labor market surveys in Rutovitz et al (2025), which is validated against an analysis for South Africa in NBI (2024). Employment factors for off-grid technologies come from Africa-specific studies.</p>
+          <div class="table-caption">Table 1: T&amp;D Lines Employment Factor Calculation</div>
+          <p></p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Calculation / Data Source</th>
+                <th>Factor Used</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Total LV/MV Employment Factor</td>
+                <td>Rutovitz et al (2025) - Single Circuit</td>
+                <td>
+                  <strong>0.7 jobs/KM</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Total HV Employment Factor</td>
+                <td>Rutovitz et al (2025) - Double Circuit</td>
+                <td>
+                  <strong>3.7 jobs/KM</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Construction &amp; Installation (C&amp;I) Share</td>
+                <td>Rutovitz et al (2025)</td>
+                <td>
+                  <strong>100%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Operations &amp; Maintenance (O&amp;M) Share</td>
+                <td>Residual share</td>
+                <td>
+                  <strong>0%</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <em>Note: This aligns with estimates from South Africa (NBI 2024), which report 7,300–13,400 gross jobs over 16,000KM of T&amp;D lines = 0.46-0.84 jobs/KM.</em>
+          </p>
+          <div class="table-caption">Table 2: Minigrid Employment Factor Calculation</div>
+          <p>Supplemental data from Power for All (2022) survey data (Kenya, Ethiopia, Nigeria, and Uganda) and IRENA (2024) case study on Kenya minigrids:</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Calculation / Data Source</th>
+                <th>Factor Used</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Formal Sector Jobs (per MW)</td>
+                <td>Mean of 84.11, 65.72, 197.85, 83.8</td>
+                <td>
+                  <strong>107.9</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Informal Sector Jobs (per MW)</td>
+                <td>Mean of 71.3, 26.09, 61.91, 13.55</td>
+                <td>
+                  <strong>43.2</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Total Minigrid Employment Factor</td>
+                <td>Formal + Informal Jobs</td>
+                <td>
+                  <strong>151.1 jobs/MW</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Construction &amp; Installation (C&amp;I) Share</td>
+                <td>IRENA (2024)</td>
+                <td>
+                  <strong>77%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Operations &amp; Maintenance (O&amp;M) Share</td>
+                <td>Residual share</td>
+                <td>
+                  <strong>23%</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="table-caption">Table 3: Standalone Solar Employment Factor Calculation</div>
+          <p>Calculated from Power for All (2022) survey data (Kenya, Ethiopia, Nigeria, and Uganda):</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Calculation / Assumption</th>
+                <th>Factor Used</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Formal Sector Jobs (per 1000 systems)</td>
+                <td>Mean of 8.2, 51.2, 15.5, 90.1</td>
+                <td>
+                  <strong>41.3</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Informal Sector Jobs (per 1000 systems)</td>
+                <td>Mean of 16, 24.1, 3.3, 21.8</td>
+                <td>
+                  <strong>16.3</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Assumed System Size</td>
+                <td>Mean of 10-100 watts range</td>
+                <td>
+                  <strong>55 Watts</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Total SHS Employment Factor</td>
+                <td>Jobs per Watt × 1,000,000</td>
+                <td>
+                  <strong>1046.3 jobs/MW</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Construction &amp; Installation (C&amp;I) Share</td>
+                <td>Heuristic based on minigrid share</td>
+                <td>
+                  <strong>75%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Operations &amp; Maintenance (O&amp;M) Share</td>
+                <td>Residual share</td>
+                <td>
+                  <strong>25%</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>7.3 Occupational Breakdown</h3>
+          <p>The occupation distribution within each job is specified by Rutovitz et al (2025) for line construction, utility-scale solar, on-shore wind, and hydro. 
+                                      The latter three are used for solar hybrid minigrid, wind hybrid minigrid, and hydro minigrid ,respectively.</p>
+          <p>For standalone solar, GOGLA (2018) provides a general occupational breakdown, which is mapped to specific skill categories and phases for the SHS workforce.</p>
+          <div class="table-caption">Table 4: Standalone Solar Occupational Share Calculation</div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>GOGLA Role</th>
+                <th>Phase</th>
+                <th>Job Role in Model</th>
+                <th>Share of Workforce (Avg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Management</td>
+                <td>Construction &amp; Installation</td>
+                <td>Executives &amp; senior managers</td>
+                <td>
+                  <strong>9%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Acquisition / Manufacturing</td>
+                <td>Construction &amp; Installation</td>
+                <td>Professionals (other)</td>
+                <td>
+                  <strong>5%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Sales and Distribution</td>
+                <td>Construction &amp; Installation</td>
+                <td>Sales and Distribution</td>
+                <td>
+                  <strong>59%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Installation</td>
+                <td>Construction &amp; Installation</td>
+                <td>SHS Technicians</td>
+                <td>
+                  <strong>8%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Maintenance</td>
+                <td>Operations &amp; Maintenance</td>
+                <td>SHS Technicians</td>
+                <td>
+                  <strong>11%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Customer Support</td>
+                <td>Operations &amp; Maintenance</td>
+                <td>Customer Service</td>
+                <td>
+                  <strong>7%</strong>
+                </td>
+                <tr>
+                  <td>Management</td>
+                  <td>Operations &amp; Maintenance</td>
+                  <td>Executives &amp; senior managers</td>
+                  <td>
+                    <strong>2%</strong>
+                  </td>
+                </tr>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <em>Note: The 11% Management share is split between C&amp;I and O&amp;M based on the 75/25 factor. The 18% Intallation &amp; Mainentance share is split to achive an 75/25 split of C&amp;I and O&amp;M.</em>
+          </p>
+          <h3>7.4 Annualization</h3>
+          <p>Critical distinction in workforce calculations:</p>
+          <ul>
+            <li><strong>Construction &amp; Installation jobs:</strong> Total job-years are divided by the 5-year construction period to get annual FTE requirements. For example, if building 10 MW requires 1000 job-years, this translates to 200 FTE/year over 5 years.</li>
+            <li><strong>Operations &amp; Maintenance jobs:</strong> Already expressed as annual jobs per MW of installed capacity. These are ongoing positions for the lifetime of the asset.</li>
+            <li><strong>Cumulative O&amp;M:</strong> For Years 6-10, O&amp;M jobs reflect the cumulative installed capacity from both periods (Years 1-5 + Years 6-10).</li>
+          </ul>
+          <h2>8. References</h2>
+          <ul>
+            <li>
+              GEP (2025). 
+              <em>World Bank Global Electrification Platform</em>
+            </li>
+            <li>
+              GOGLA (2018). Employer survey data from 
+              <em>Off-Grid Solar: A Growth Engine for Jobs, 2024</em>
+            </li>
+            <li>
+              IRENA (2024). Direct jobs in Kenyan mini-grid development from 
+              <em>Renewable Energy and Jobs</em>
+            </li>
+            <li>
+              NBI (2024). 
+              <em>Powering Futures: The Green Skilling Opportunity.</em>
+            </li>
+            <li>
+              Power for All (2022). 
+              <em>Powering Jobs Census</em>
+              .
+            </li>
+            <li>
+              Rutovitz et al (2025). Updated employment factors and occupational shares for the energy transition. 
+              <em>Renewable and Sustainable Energy Reviews.</em>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+        function showTab(tabName) {
+          var contents = document.getElementsByClassName('tab-content');
+          for (var i = 0; i < contents.length; i++) {
+            contents[i].classList.remove('active');
+          }
+          
+          var tabs = document.getElementsByClassName('nav-tab');
+          for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+          }
+          
+          document.getElementById(tabName).classList.add('active');
+          event.target.classList.add('active');
+        }
+        
+        function navigateToCountry(countryCode) {
+          window.location.href = 'workforce_dashboard_' + countryCode + '.html';
+        }
+      </script>
+  </body>
+</html>
+</html>
