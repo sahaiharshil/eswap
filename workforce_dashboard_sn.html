@@ -393,7 +393,7 @@
             </div>
             <div class="stat-box">
               <div class="stat-label">Workforce Required</div>
-              <div class="stat-value">39,577 FTE/Year</div>
+              <div class="stat-value">20,329 FTE/Year</div>
             </div>
           </div>
         </div>
@@ -426,25 +426,31 @@
           <h2>1. Overview</h2>
           <p>This analysis estimates the investment and annual workforce required to achieve full household electrification in Africa over a 10-year program (split over two periods, Years 1–5 and 6–10). It integrates least-cost capacity and grid expansion outputs from the Global Electrification Platform (GEP) with technology- and Africa-specific employment factors and occupational shares to produce FTE estimates by technology, phase, skill tier, and job role. 
                                    This accounts for construction, installation, operations, and maintenance of required assets for the 10 year period.</p>
-          <h2>2. Technology Grouping</h2>
-          <p>Least-cost energy access infrastructure deployment across Africa is largely driven by four main technology groups:</p>
+          <h2>2. Data Sources</h2>
+          <p>Data for the analysis is drawn from three main streams: Global Electrification Platform (GEP) outputs for capacity/line additions, and technology-specific studies for Employment Factors &amp; Occupational Shares.</p>
+          <div class="data-source">
+            <h4>2.1 Word Bank Global Electrification Platform (GEP)</h4>
+            <p>Provides investment costs, capacity additions (MW), and grid expansion (KM) by technology and year from OnSSET-based least-cost planning models to achieve universal energy access.</p>
+          </div>
+          <div class="table-caption">Table 1: Least Cost Technologies for Energy Access</div>
+          <p>Providing least-cost energy access across Africa requires four main types of technologies:</p>
           <table class="data-table">
             <thead>
               <tr>
-                <th>Technology Group</th>
-                <th>Included Technologies</th>
+                <th>Technology</th>
+                <th>Description</th>
                 <th>Deployment Context</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Standalone Solar</td>
-                <td>Solar Home Systems (SHS)</td>
-                <td>Off-grid, single-home applications</td>
+                <td>Grid Extension</td>
+                <td>Transmission &amp; distribution lines (LV/MV/HV)</td>
+                <td>On-grid, national scale</td>
               </tr>
               <tr>
-                <td>Mini-grid PV Hybrid</td>
-                <td>Small-scale solar with battery/diesel backup</td>
+                <td>Mini-grid Hydro</td>
+                <td>Small-scale hydropower systems</td>
                 <td>Off-grid, community-level applications</td>
               </tr>
               <tr>
@@ -453,51 +459,47 @@
                 <td>Off-grid, community-level applications</td>
               </tr>
               <tr>
-                <td>Mini-grid Hydro</td>
-                <td>Small-scale hydropower systems</td>
+                <td>Mini-grid PV Hybrid</td>
+                <td>Small-scale solar with battery/diesel backup</td>
                 <td>Off-grid, community-level applications</td>
               </tr>
               <tr>
-                <td>Grid Extension</td>
-                <td>Transmission &amp; distribution lines (LV/MV/HV)</td>
-                <td>On-grid, national scale</td>
+                <td>Standalone Solar</td>
+                <td>Solar Home Systems (SHS)</td>
+                <td>Off-grid, single-home applications</td>
               </tr>
             </tbody>
           </table>
-          <h2>3. Data Sources</h2>
-          <p>Data for the analysis is drawn from three main streams: Global Electrification Platform (GEP) outputs for capacity/line additions, and technology-specific studies for Employment Factors &amp; Occupational Shares.</p>
           <div class="data-source">
-            <h4>3.1 Word Bank Global Electrification Platform (GEP)</h4>
-            <p>Provides investment costs, capacity additions (MW), and grid expansion (KM) by technology and year from OnSSET-based least-cost planning models to achieve universal energy access.</p>
-          </div>
-          <div class="data-source">
-            <h4>3.2 Employment Factors (Jobs per MW or KM)</h4>
+            <h4>2.2 Employment Factors (Jobs per MW or KM)</h4>
             <ul>
-              <li><strong>T&amp;D Lines:</strong> Derived from Australian renewable energy infrastructure employment studies (Rutovitz et al. 2025), validated against past projects and projections in South Africa (NBI 2024).</li>
-              <li><strong>Solar Home Systems &amp; Minigrids:</strong> Calculated from Power for All (2022), which is based on direct surveys across Kenya, Ethiopia, Nigeria, and Uganda.</li>
+              <li><strong>Grid Extension:</strong> Derived from Australian renewable energy infrastructure employment studies (Rutovitz et al. 2025), validated against past projects and projections in South Africa (NBI 2024).</li>
+              <li><strong>Minigrids:</strong> Calculated from Power for All (2022), which is based on direct surveys across Kenya, Ethiopia, Nigeria, and Uganda. Splits between construction/installation and operations/maintenance are sourced from IRENA (2024) case study on Kenyan minigrids.</li>
+              <li><strong>Solar Home Systems:</strong> Calculated from GOGLA (2024), which is based on direct surveys across West, Central, and East Africa.</li>
             </ul>
           </div>
           <div class="data-source">
-            <h4>3.3 Occupational Shares (Job Distribution by Role)</h4>
+            <h4>2.3 Occupational Shares (Job Distribution by Role)</h4>
             <ul>
-              <li><strong>T&amp;D Lines &amp; Minigrids:</strong> Sourced primarily from Australian infrastructure occupational shares, with utility-scale solar shares assumed to approximate minigrid PV.</li>
-              <li><strong>Solar Home Systems (SHS):</strong> Mapped using the GOGLA (2018) regional workforce breakdown (for sales, management, etc.), supplemented by IRENA (2024) survey data for construction/O&amp;M splits.</li>
+              <li><strong>Grid Extension &amp; Minigrids:</strong> Sourced from Australian infrastructure occupational shares (Rutovitz et al. 2025), with utility-scale solar shares assumed to approximate minigrid PV.</li>
+              <li><strong>Solar Home Systems (SHS):</strong> Mapped using role-specific breakdowns provided in GOGLA (2024), which is based on direct surveys across West, Central, and East Africa.</li>
             </ul>
           </div>
-          <h2>4. Calculation Methodology</h2>
-          <h3>4.1 Estimate infrastructure needed to reach 100% access</h3>
+          <h2>3. Workforce Requirement Calculation</h2>
+          <p>Once the data is collected, two steps are needed to compute workforce needs for each country:</p>
+          <h3>Step 1. Estimate infrastructure needed to reach 100% access</h3>
           <p>For each 5-year period (Years 1-5 and Years 6-10):</p>
           <ul>
             <li>
-              <strong>Generation:</strong>
-               Sum of new capacity additions (MW) by technology
-            </li>
-            <li>
-              <strong>Grid:</strong>
+              <strong>Grid Extension:</strong>
                Sum of line additions (KM) by voltage level (LV, MV, HV)
             </li>
+            <li>
+              <strong>Minigrids &amp; Standalone Solar:</strong>
+               Sum of new capacity additions (MW) by technology
+            </li>
           </ul>
-          <h3>4.2 Compute workforce needed to build required infrastructure</h3>
+          <h3>Step 2. Compute workforce needed to build required infrastructure</h3>
           <p>The core formula for calculating workforce needs:</p>
           <div class="formula">Annual Jobs Required = Capacity Required × Employment Factor × Occupational Share</div>
           <p>
@@ -506,7 +508,7 @@
           <ul>
             <li>
               <strong>Capacity Required:</strong>
-               MW for generation or KM for grid infrastructure
+               KM of LV/MV/HV lines for grid extension or MW of capacity for minigrids &amp; standalone solar
             </li>
             <li>
               <strong>Employent Factor:</strong>
@@ -517,78 +519,92 @@
                Proportion of total jobs in each role category
             </li>
           </ul>
-          <h2>5. Skill Level Classification</h2>
-          <p>Jobs are categorized into five skill tiers based on required qualifications and responsibilities:</p>
+          <h2>4. Skill Level Classification</h2>
+          <p>A taxonomy is built using Perplexity Deep Research to map each job role to a skill tier using the International Standard Classification of Occupations (ISCO-08) and International Standard Classification of Education (ISCED-11) frameworks.</p>
+          <h3>Step 1: Job Role Identification</h3>
+          <p>50 job roles across the energy access value chain are identified:</p>
+          <ul>
+            <li>
+              <strong>Grid Extension &amp; Minigrids:</strong>
+               Occupational categories from Rutovitz et al. (2025), including roles in transmission &amp; distribution, and utility-scale solar, wind, and hydro
+            </li>
+            <li>
+              <strong>Solar Home Systems:</strong>
+               Role-specific breakdowns from GOGLA (2024) employer surveys across West, Central, and East Africa
+            </li>
+            <li>
+              <strong>Coverage:</strong>
+               Managers, engineers, professionals, technicians, trades, machine operators, administrative staff, and laborers
+            </li>
+          </ul>
+          <h3>Step 2: ISCO-08 Occupational Mapping with AI</h3>
+          <p>Each of the 50 job roles is fuzzy matched to the closest ISCO-08 unit group. This provided:</p>
+          <ul>
+            <li>Standardized occupational definitions recognized internationally</li>
+            <li>Associated ISCO skill levels (1–4) for each role</li>
+            <li>Consistent framework for comparing roles across different studies and contexts</li>
+          </ul>
+          <h3>Step 3: ISCED Level Assignment with AI</h3>
+          <p>ISCO skill levels are mapped to single ISCED-11 education level, combining standard ILO/UNESCO correspondence with African evidence:</p>
+          <ul>
+            <li>
+              <strong>Initial Band Mapping:</strong>
+               ISCO skill levels converted to ISCED bands using standard correspondence (Skill 1→ISCED 1–2, Skill 2→ISCED 3–4, Skill 3→ISCED 5, Skill 4→ISCED 6–8)
+            </li>
+            <li>
+              <strong>African Evidence Validation:</strong>
+               Each role validated against concrete African qualification requirements from national qualifications frameworks (SAQA in South Africa, KNQA/TVETA in Kenya), government/utility job specifications (Kenya Power, Eskom), TVET documentation, and sector job advertisements
+            </li>
+            <li>
+              <strong>Single Level Selection:</strong>
+               Within each ISCED band, Perplexity identified the single most typical formal education level based on documented African evidence
+            </li>
+            <li>
+              <strong>Final Grouping:</strong>
+               The resulting single ISCED levels were consolidated into four tiers based on the distribution: ISCED 1–3, ISCED 4, ISCED 5, and ISCED 6–8
+            </li>
+          </ul>
+          <div class="table-caption">Table 2: Job Role to Skill Tier Taxonomy</div>
+          <p>The table below summarizes how the 50 energy sector jobs map to four skill tiers:</p>
           <table class="data-table">
             <thead>
               <tr>
                 <th>Skill Tier</th>
-                <th>Key Roles</th>
-                <th>Required Qualification/Experience</th>
+                <th>Required Education</th>
+                <th>Example Roles</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>
-                  <strong>Low: Laborers &amp; Admin</strong>
-                </td>
-                <td>General Laborers, Construction Labourers, Admin Staff, Storepersons, SHS Customer Service</td>
-                <td>Basic education</td>
+                <td style="white-space: nowrap;">ISCED 1–3</td>
+                <td>Primary &amp; Secondary</td>
+                <td>Admin Staff, Storepersons &amp; Packers, Construction Labourers, General Labourers, and SHS Customer Service, Retail Staff, and Salesforce</td>
               </tr>
               <tr>
-                <td>
-                  <strong>Low-Medium: Machine Operators &amp; Sales</strong>
-                </td>
-                <td>Truck Drivers, Machine Operators, SHS Sales &amp; Distribution</td>
-                <td>Vocational training / on-the-job experience</td>
+                <td style="white-space: nowrap;">ISCED 4</td>
+                <td>Post-secondary Non-tertiary</td>
+                <td>Metal Trades, Construction Trades, Plumbers, Electricians, Lineworkers, Cable Jointers, Crane Operators, Machine Operators, Drillers, Earthmoving Plant Operators, Truck Drivers, Concreters, Riggers &amp; Dogmen, Steel Fixers, Electrical/Telecommunications Trade Assistants</td>
               </tr>
               <tr>
-                <td>
-                  <strong>Medium: Trades &amp; Technicians</strong>
-                </td>
-                <td>Electricians, Lineworkers, Plumbers, Metal Trades, Technicians, SHS Technicians</td>
-                <td>Technical training / certification and trades experience</td>
+                <td style="white-space: nowrap;">ISCED 5</td>
+                <td>Short-cycle tertiary</td>
+                <td>SHS Technicians, Civil Engineering Technicians, Mechanical Trades &amp; Technicians, Telecommunications Technicians, Control Room &amp; Power Plant Operators</td>
               </tr>
               <tr>
-                <td>
-                  <strong>Medium-High: Professionals</strong>
-                </td>
-                <td>IT Professionals, Finance/Policy Professionals, Construction Managers, Operations/Production Managers, Business/Procurement Managers, Control Room Operators</td>
-                <td>University degree and relevant professional experience</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>High: Engineers &amp; Senior Mgmt</strong>
-                </td>
-                <td>Executives &amp; Senior Managers, Civil/Electrical/Mechanical/Structural/Geotechnical Engineers, Quantity Surveyors, Engineering Managers, Telecommunications Engineers</td>
-                <td>Advanced degrees and extensive specialized experience</td>
+                <td style="white-space: nowrap;">ISCED 6–8</td>
+                <td>Tertiary</td>
+                <td>Executives &amp; Senior Managers; All Managers (Business Development, Construction, Engineering, Operations, Logistics, etc.); All Engineers (Civil, Electrical, Mechanical, Structural, Geotechnical, Telecommunications); Quantity Surveyors; Finance/Business/Legal/Policy Professionals; Community Engagement, EHS, IT Professionals</td>
               </tr>
             </tbody>
           </table>
-          <h2>6. Key Assumptions &amp; Limitations</h2>
-          <h3>Assumptions</h3>
-          <ul>
-            <li>Employment factors do not fall with time (low productivity increase scenario).</li>
-            <li>Construction period is 5 years for each capacity addition phase.</li>
-            <li>Occupational distributions remain stable across the projection period.</li>
-            <li>Note: No country-specific productivity adjustment: all employment factors come from or are validated against Africa-specific estimates.</li>
-          </ul>
-          <h3>Limitations</h3>
-          <ul>
-            <li>The model is based on infrastructure to provide energy access; generation is excluded and so this serves as a lower bound for sector-wide workforce needs.</li>
-            <li>Employment factors may not fully capture local labor market conditions.</li>
-            <li>Manufacturing jobs are excluded (focus on deployment only).</li>
-            <li>Does not model workforce transitions between construction and O&amp;M phases.</li>
-            <li>Regional variations within countries are not captured.</li>
-          </ul>
-          <h2>7. Scenario Parameters &amp; Assumptions</h2>
-          <h3>7.1 Scenario Configuration</h3>
+          <h2>5. Model Parameters &amp; Inputs</h2>
+          <h3>5.1 Scenario Configuration</h3>
           <p>This analysis uses the following scenario configuration:</p>
           <ul>
             <li>
               <strong>Demand Level:</strong>
                
-              Poverty (Tier 1)
+              Estimated Poverty/GDP
             </li>
             <li>
               <strong>Energy Use:</strong>
@@ -620,9 +636,9 @@
             Scenario Code: 
             <code>0_1_0_0_1_0</code>
           </p>
-          <h3>7.2 Employment Factor Assumptions</h3>
-          <p>Employment factors are derived from Australian labor market surveys in Rutovitz et al (2025), which is validated against an analysis for South Africa in NBI (2024). Employment factors for off-grid technologies come from Africa-specific studies.</p>
-          <div class="table-caption">Table 1: T&amp;D Lines Employment Factor Calculation</div>
+          <h3>5.2 Employment Factors</h3>
+          <p>Employment factors for grid extension are derived from Australian labor market surveys in Rutovitz et al (2025), which is validated against an analysis for South Africa in NBI (2024). Employment factors for off-grid technologies come from Africa-specific studies.</p>
+          <div class="table-caption">Table 3: Grid Extension Employment Factor Calculation</div>
           <p></p>
           <table class="data-table">
             <thead>
@@ -634,17 +650,17 @@
             </thead>
             <tbody>
               <tr>
-                <td>Total LV/MV Employment Factor</td>
+                <td>Total LV/MV Employment Factor (per KM)</td>
                 <td>Rutovitz et al (2025) - Single Circuit</td>
                 <td>
-                  <strong>0.7 jobs/KM</strong>
+                  <strong>0.7</strong>
                 </td>
               </tr>
               <tr>
-                <td>Total HV Employment Factor</td>
+                <td>Total HV Employment Factor (per KM)</td>
                 <td>Rutovitz et al (2025) - Double Circuit</td>
                 <td>
-                  <strong>3.7 jobs/KM</strong>
+                  <strong>3.7</strong>
                 </td>
               </tr>
               <tr>
@@ -666,7 +682,7 @@
           <p>
             <em>Note: This aligns with estimates from South Africa (NBI 2024), which report 7,300–13,400 gross jobs over 16,000KM of T&amp;D lines = 0.46-0.84 jobs/KM.</em>
           </p>
-          <div class="table-caption">Table 2: Minigrid Employment Factor Calculation</div>
+          <div class="table-caption">Table 4: Minigrid Employment Factor Calculation</div>
           <p>Supplemental data from Power for All (2022) survey data (Kenya, Ethiopia, Nigeria, and Uganda) and IRENA (2024) case study on Kenya minigrids:</p>
           <table class="data-table">
             <thead>
@@ -692,174 +708,133 @@
                 </td>
               </tr>
               <tr>
-                <td>Total Minigrid Employment Factor</td>
+                <td>Total Minigrid Employment Factor (per MW)</td>
                 <td>Formal + Informal Jobs</td>
                 <td>
-                  <strong>151.1 jobs/MW</strong>
+                  <strong>151.1</strong>
                 </td>
               </tr>
               <tr>
                 <td>Construction &amp; Installation (C&amp;I) Share</td>
                 <td>IRENA (2024)</td>
                 <td>
-                  <strong>77%</strong>
+                  <strong>77.2%</strong>
                 </td>
               </tr>
               <tr>
                 <td>Operations &amp; Maintenance (O&amp;M) Share</td>
                 <td>Residual share</td>
                 <td>
-                  <strong>23%</strong>
+                  <strong>23.8%</strong>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div class="table-caption">Table 3: Standalone Solar Employment Factor Calculation</div>
-          <p>Calculated from Power for All (2022) survey data (Kenya, Ethiopia, Nigeria, and Uganda):</p>
+          <div class="table-caption">Table 5: Standalone Solar Employment Factor Calculation</div>
+          <p>Calculated from GOGLA (2024), averaged across West, Central, and East Africa:</p>
           <table class="data-table">
             <thead>
               <tr>
                 <th>Component</th>
-                <th>Calculation / Assumption</th>
+                <th>Calculation / Data Source</th>
                 <th>Factor Used</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Formal Sector Jobs (per 1000 systems)</td>
-                <td>Mean of 8.2, 51.2, 15.5, 90.1</td>
+                <td>Cash: Jobs (per 1000 systems)</td>
+                <td>Computed from GOGLA (2024)</td>
                 <td>
-                  <strong>41.3</strong>
+                  <strong>0.9</strong>
                 </td>
               </tr>
               <tr>
-                <td>Informal Sector Jobs (per 1000 systems)</td>
-                <td>Mean of 16, 24.1, 3.3, 21.8</td>
+                <td>PAYGo: Jobs (per 1000 systems)</td>
+                <td>Computed from GOGLA (2024)</td>
                 <td>
-                  <strong>16.3</strong>
+                  <strong>41.2</strong>
                 </td>
               </tr>
               <tr>
-                <td>Assumed System Size</td>
+                <td>PAYGo Fraction of Sales</td>
+                <td>Computed from GOGLA (2024)</td>
+                <td>
+                  <strong>58.1%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Total Jobs (per 1000 systems)</td>
+                <td>Weighted average</td>
+                <td>
+                  <strong>24.3</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Assumed System Size (Watts)</td>
                 <td>Mean of 10-100 watts range</td>
                 <td>
-                  <strong>55 Watts</strong>
+                  <strong>55.0</strong>
                 </td>
               </tr>
               <tr>
-                <td>Total SHS Employment Factor</td>
+                <td>Total SHS Employment Factor (per MW)</td>
                 <td>Jobs per Watt × 1,000,000</td>
                 <td>
-                  <strong>1046.3 jobs/MW</strong>
+                  <strong>441.5</strong>
                 </td>
               </tr>
               <tr>
                 <td>Construction &amp; Installation (C&amp;I) Share</td>
-                <td>Heuristic based on minigrid share</td>
+                <td>Computed from GOGLA (2024)</td>
                 <td>
-                  <strong>75%</strong>
+                  <strong>82.3%</strong>
                 </td>
               </tr>
               <tr>
                 <td>Operations &amp; Maintenance (O&amp;M) Share</td>
                 <td>Residual share</td>
                 <td>
-                  <strong>25%</strong>
+                  <strong>17.7%</strong>
                 </td>
-              </tr>
-            </tbody>
-          </table>
-          <h3>7.3 Occupational Breakdown</h3>
-          <p>The occupation distribution within each job is specified by Rutovitz et al (2025) for line construction, utility-scale solar, on-shore wind, and hydro. 
-                                      The latter three are used for solar hybrid minigrid, wind hybrid minigrid, and hydro minigrid ,respectively.</p>
-          <p>For standalone solar, GOGLA (2018) provides a general occupational breakdown, which is mapped to specific skill categories and phases for the SHS workforce.</p>
-          <div class="table-caption">Table 4: Standalone Solar Occupational Share Calculation</div>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>GOGLA Role</th>
-                <th>Phase</th>
-                <th>Job Role in Model</th>
-                <th>Share of Workforce (Avg)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Management</td>
-                <td>Construction &amp; Installation</td>
-                <td>Executives &amp; senior managers</td>
-                <td>
-                  <strong>9%</strong>
-                </td>
-              </tr>
-              <tr>
-                <td>Acquisition / Manufacturing</td>
-                <td>Construction &amp; Installation</td>
-                <td>Professionals (other)</td>
-                <td>
-                  <strong>5%</strong>
-                </td>
-              </tr>
-              <tr>
-                <td>Sales and Distribution</td>
-                <td>Construction &amp; Installation</td>
-                <td>Sales and Distribution</td>
-                <td>
-                  <strong>59%</strong>
-                </td>
-              </tr>
-              <tr>
-                <td>Installation</td>
-                <td>Construction &amp; Installation</td>
-                <td>SHS Technicians</td>
-                <td>
-                  <strong>8%</strong>
-                </td>
-              </tr>
-              <tr>
-                <td>Maintenance</td>
-                <td>Operations &amp; Maintenance</td>
-                <td>SHS Technicians</td>
-                <td>
-                  <strong>11%</strong>
-                </td>
-              </tr>
-              <tr>
-                <td>Customer Support</td>
-                <td>Operations &amp; Maintenance</td>
-                <td>Customer Service</td>
-                <td>
-                  <strong>7%</strong>
-                </td>
-                <tr>
-                  <td>Management</td>
-                  <td>Operations &amp; Maintenance</td>
-                  <td>Executives &amp; senior managers</td>
-                  <td>
-                    <strong>2%</strong>
-                  </td>
-                </tr>
               </tr>
             </tbody>
           </table>
           <p>
-            <em>Note: The 11% Management share is split between C&amp;I and O&amp;M based on the 75/25 factor. The 18% Intallation &amp; Mainentance share is split to achive an 75/25 split of C&amp;I and O&amp;M.</em>
+            <em>Note: GOGLA (2024) is more conservative than Power for All (2022) survey data (Kenya, Ethiopia, Nigeria, and Uganda), which yields an analogous employment factor of 1046.3 jobs/MW. Unlike Power for All (2022), GOGLA (2024) accounts for differing factors between cash vs. PAYGo systems.</em>
           </p>
-          <h3>7.4 Annualization</h3>
+          <h3>5.3 Occupational Breakdown</h3>
+          <p>The occupation distribution within each job (managers, engineers, technicians, etc.) is specified by Rutovitz et al (2025) for grid extension, utility-scale solar, on-shore wind, and hydro. 
+                                      The latter three are used for solar hybrid minigrid, wind hybrid minigrid, and hydro minigrid, respectively.</p>
+          <p>For standalone solar, GOGLA (2024) provides a general occupational breakdown, which is mapped to specific skill categories and phases for the SHS workforce. GOGLA roles that cover both C&amp;I and O&amp;M are split 50/50 between each phase. This results in a total C&amp;amp;I share of 82.3%, in line with the minigrid figure of 77.2%</p>
+          <h3>5.4 Annualization</h3>
           <p>Critical distinction in workforce calculations:</p>
           <ul>
             <li><strong>Construction &amp; Installation jobs:</strong> Total job-years are divided by the 5-year construction period to get annual FTE requirements. For example, if building 10 MW requires 1000 job-years, this translates to 200 FTE/year over 5 years.</li>
             <li><strong>Operations &amp; Maintenance jobs:</strong> Already expressed as annual jobs per MW of installed capacity. These are ongoing positions for the lifetime of the asset.</li>
             <li><strong>Cumulative O&amp;M:</strong> For Years 6-10, O&amp;M jobs reflect the cumulative installed capacity from both periods (Years 1-5 + Years 6-10).</li>
           </ul>
-          <h2>8. References</h2>
+          <h2>6. Key Assumptions &amp; Limitations</h2>
+          <h3>Assumptions</h3>
+          <ul>
+            <li>Employment factors do not fall with time (low productivity increase scenario).</li>
+            <li>Construction period is 5 years for each capacity addition phase.</li>
+            <li>Occupational distributions remain stable across the projection period.</li>
+            <li>No country-specific productivity adjustment: all employment factors come from or are validated against Africa-specific estimates.</li>
+          </ul>
+          <h3>Limitations</h3>
+          <ul>
+            <li>The model is based on infrastructure required to provide energy access; jobs required for generation are excluded.</li>
+            <li>Employment factors and skill tiers are Africa-specific, but may not fully capture local labor market conditions across and within African countries.</li>
+            <li>Manufacturing jobs are excluded (focus on deployment only).</li>
+          </ul>
+          <h2>7. References</h2>
           <ul>
             <li>
               GEP (2025). 
               <em>World Bank Global Electrification Platform</em>
             </li>
             <li>
-              GOGLA (2018). Employer survey data from 
+              GOGLA (2024). Employer survey data from 
               <em>Off-Grid Solar: A Growth Engine for Jobs, 2024</em>
             </li>
             <li>
