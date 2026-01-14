@@ -31,17 +31,24 @@
           overflow: hidden;
         }
         
-        .country-selector {
+        .dual-selector {
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           padding: 15px 40px;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 15px;
+          gap: 30px;
           border-bottom: 3px solid rgba(255,255,255,0.3);
+          flex-wrap: wrap;
         }
         
-        .country-selector label {
+        .selector-group {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        
+        .selector-group label {
           color: white;
           font-size: 0.9em;
           font-weight: 600;
@@ -49,7 +56,7 @@
           letter-spacing: 1px;
         }
         
-        .country-selector select {
+        .selector-group select {
           padding: 8px 16px;
           font-size: 1em;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -59,19 +66,24 @@
           color: #667eea;
           font-weight: 600;
           cursor: pointer;
-          min-width: 200px;
+          min-width: 250px;
           transition: all 0.3s ease;
         }
         
-        .country-selector select:hover {
+        .selector-group select:hover:not(:disabled) {
           background: #f8f9fa;
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
-        .country-selector select:focus {
+        .selector-group select:focus {
           outline: none;
           box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+        }
+        
+        .selector-group select:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
         
         .nav-tabs {
@@ -231,6 +243,17 @@
             flex-direction: column;
             gap: 20px;
           }
+          .dual-selector {
+            flex-direction: column;
+            gap: 15px;
+          }
+          .selector-group {
+            width: 100%;
+            flex-direction: column;
+          }
+          .selector-group select {
+            width: 100%;
+          }
         }
         
         .methodology-content {
@@ -339,7 +362,7 @@
           padding: 25px;
           margin: 30px auto; 
           border-radius: 10px;
-          max-width: 80%; 
+          max-width: 90%; 
           border: 2px solid #667eea; 
         }
       </style>
@@ -347,28 +370,38 @@
 <html>
   <body>
     <div class="container">
-      <div class="country-selector">
-        <label>SELECT COUNTRY:</label>
-        <select id="countrySelect" onchange="navigateToCountry(this.value)">
-          <option value="bj">Benin</option>
-          <option value="bw">Botswana</option>
-          <option value="td">Chad</option>
-          <option value="cg">Congo</option>
-          <option value="sz">Eswatini</option>
-          <option value="gn">Guinea</option>
-          <option value="gw">Guinea-Bissau</option>
-          <option value="ci">Ivory Coast</option>
-          <option value="ls">Lesotho</option>
-          <option value="mw" selected>Malawi</option>
-          <option value="na">Namibia</option>
-          <option value="ng">Nigeria</option>
-          <option value="sn">Senegal</option>
-          <option value="sl">Sierra Leone</option>
-          <option value="so">Somalia</option>
-          <option value="tz">Tanzania</option>
-          <option value="zm">Zambia</option>
-          <option value="zw">Zimbabwe</option>
-        </select>
+      <div class="dual-selector">
+        <div class="selector-group">
+          <label>SELECT COUNTRY:</label>
+          <select id="countrySelect" onchange="navigateToCountryAndStage()">
+            <option value="bj">Benin</option>
+            <option value="bw">Botswana</option>
+            <option value="td">Chad</option>
+            <option value="cg">Congo</option>
+            <option value="sz">Eswatini</option>
+            <option value="gn">Guinea</option>
+            <option value="gw">Guinea-Bissau</option>
+            <option value="ci">Ivory Coast</option>
+            <option value="ls">Lesotho</option>
+            <option value="mw" selected>Malawi</option>
+            <option value="na">Namibia</option>
+            <option value="ng">Nigeria</option>
+            <option value="sn">Senegal</option>
+            <option value="sl">Sierra Leone</option>
+            <option value="so">Somalia</option>
+            <option value="tz">Tanzania</option>
+            <option value="zm">Zambia</option>
+            <option value="zw">Zimbabwe</option>
+          </select>
+        </div>
+        <div class="selector-group">
+          <label>SELECT STAGE:</label>
+          <select id="stageSelect" onchange="navigateToCountryAndStage()">
+            <option value="combined" selected>Combined</option>
+            <option value="td">Access</option>
+            <option value="gen">Generation</option>
+          </select>
+        </div>
       </div>
       <div class="nav-tabs">
         <button class="nav-tab active" onclick="showTab(&#39;overview&#39;)">Overview</button>
@@ -377,23 +410,24 @@
       <div id="overview" class="tab-content active">
         <div class="hero-section">
           <h1>Energy Sector Workforce Analysis &amp; Projection: Malawi</h1>
-          <div class="subtitle1">Scenario: 100% Energy Access in 10 Years</div>
+          <div class="subtitle1">Access Scenario: 100% Energy Access in 10 Years</div>
+          <div class="subtitle1">Generation Scenario: Country Master Plans</div>
           <div class="subtitle2">PRELIMINARY AND INCOMPLETE</div>
           <div class="subtitle">
-            <p>This Version: Harshil Sahai, December 2025</p>
+            <p>This Version: Harshil Sahai, January 2026</p>
           </div>
-          <div class="stats">
+          <div class="stats" id="summaryStats">
             <div class="stat-box">
-              <div class="stat-label">Population to Connect</div>
-              <div class="stat-value">23.6 Million</div>
+              <div class="stat-label" id="stat1Label">Population to Connect</div>
+              <div class="stat-value" id="stat1Value">23.6 Million</div>
             </div>
             <div class="stat-box">
               <div class="stat-label">Infrastructure Investment Required</div>
-              <div class="stat-value">$5.5 Billion</div>
+              <div class="stat-value" id="statCost">$9.4 Billion</div>
             </div>
             <div class="stat-box">
               <div class="stat-label">Workforce Required</div>
-              <div class="stat-value">65,970 FTE/Year</div>
+              <div class="stat-value" id="statJobs">80,085 FTE/Year</div>
             </div>
           </div>
         </div>
@@ -401,21 +435,27 @@
           <h2 class="section-title">Required Investment &amp; Workforce by Technology</h2>
           <div class="two-column">
             <div class="chart-container">
-              <iframe src="plots/cost_pie_mw.html" height="600px"></iframe>
+              <iframe id="costPlot" src="plots/cost_pie_mw_combined.html" height="600px"></iframe>
             </div>
             <div class="chart-container">
-              <iframe src="plots/jobs_pie_mw.html" height="600px"></iframe>
+              <iframe id="jobsPlot" src="plots/jobs_pie_mw_combined.html" height="600px"></iframe>
             </div>
+          </div>
+        </div>
+        <div class="section">
+          <h2 class="section-title">Required Workforce by Technology &amp; Phase</h2>
+          <div class="chart-container" style="max-width: 900px; margin: 0 auto;">
+            <iframe id="techStackPlot" src="plots/tech_stack_mw_combined.html" height="600px"></iframe>
           </div>
         </div>
         <div class="section">
           <h2 class="section-title">Required Workforce by Skill Tier &amp; Job Role</h2>
           <div>
             <div class="chart-container">
-              <iframe src="plots/skill_bar_overview_mw.html" height="600px"></iframe>
+              <iframe id="skillPlot" src="plots/skill_bar_overview_mw_combined.html" height="600px"></iframe>
             </div>
             <div class="chart-container">
-              <iframe src="plots/role_plot_mw.html" height="600px"></iframe>
+              <iframe id="rolePlot" src="plots/role_plot_mw_combined.html" height="600px"></iframe>
             </div>
           </div>
         </div>
@@ -424,16 +464,16 @@
         <div class="methodology-content">
           <h1>Methodology</h1>
           <h2>1. Overview</h2>
-          <p>This analysis estimates the investment and annual workforce required to achieve full household electrification in Africa over a 10-year program (split over two periods, Years 1–5 and 6–10). It integrates least-cost capacity and grid expansion outputs from the Global Electrification Platform (GEP) with technology- and Africa-specific employment factors and occupational shares to produce FTE estimates by technology, phase, skill tier, and job role. 
-                                   This accounts for construction, installation, operations, and maintenance of required assets for the 10 year period.</p>
+          <p>This analysis estimates the investment and annual workforce required split over two periods (Years 1–5 and 6–10). The analysis is conducted across two complementary stages: (1) <strong>Access</strong>, which covers grid extension, mini-grids, and standalone solar systems required for energy access; and (2) <strong>Generation</strong>, which includes utility-scale generation capacity expansion. We combine model outputs with technology- and Africa-specific employment factors and occupational shares to produce FTE estimates by technology, phase, skill tier, and job role. The analysis accounts for construction, installation, operations, and maintenance of required assets across transmission, distribution, and generation for the 10 year period.</p>
           <h2>2. Data Sources</h2>
-          <p>Data for the analysis is drawn from three main streams: Global Electrification Platform (GEP) outputs for capacity/line additions, and technology-specific studies for Employment Factors &amp; Occupational Shares.</p>
+          <p>Data for the analysis is drawn from multiple streams, organized by stage:</p>
+          <h3>2.1 Access Stage</h3>
           <div class="data-source">
-            <h4>2.1 Word Bank Global Electrification Platform (GEP)</h4>
-            <p>Provides investment costs, capacity additions (MW), and grid expansion (KM) by technology and year from OnSSET-based least-cost planning models to achieve universal energy access.</p>
+            <h4>World Bank Global Electrification Platform (GEP)</h4>
+            <p>Provides investment costs, capacity additions (MW), and grid expansion (KM) by technology and year from OnSSET-based least-cost planning models to achieve universal energy access (GEP 2025).</p>
           </div>
-          <div class="table-caption">Table 1: Least Cost Technologies for Energy Access</div>
-          <p>Providing least-cost energy access across Africa requires four main types of technologies:</p>
+          <div class="table-caption">Table 1: Access Technologies</div>
+          <p>Providing least-cost energy access across Africa requires the following technologies:</p>
           <table class="data-table">
             <thead>
               <tr>
@@ -470,37 +510,97 @@
               </tr>
             </tbody>
           </table>
+          <h3>2.2 Generation Stage</h3>
           <div class="data-source">
-            <h4>2.2 Employment Factors (Jobs per MW or KM)</h4>
-            <ul>
-              <li><strong>Grid Extension:</strong> Derived from Australian renewable energy infrastructure employment studies (Rutovitz et al. 2025), validated against past projects and projections in South Africa (NBI 2024).</li>
-              <li><strong>Minigrids:</strong> Calculated from Power for All (2022), which is based on direct surveys across Kenya, Ethiopia, Nigeria, and Uganda. Splits between construction/installation and operations/maintenance are sourced from IRENA (2024) case study on Kenyan minigrids.</li>
-              <li><strong>Solar Home Systems:</strong> Calculated from GOGLA (2024), which is based on direct surveys across West, Central, and East Africa.</li>
-            </ul>
+            <h4>System Planning and Least-cost Analytics Tool (SPLAT)</h4>
+            <p>Provides projections of utility-scale generation capacity additions by technology required to meet increased electricity demand from country-specific master plans (IRENA 2019a).</p>
+            <p>SPLAT models the optimal generation mix to meet the aggregate demand of the entire power system, incorporating the additional load required to achieve universal access targets.</p>
           </div>
-          <div class="data-source">
-            <h4>2.3 Occupational Shares (Job Distribution by Role)</h4>
-            <ul>
-              <li><strong>Grid Extension &amp; Minigrids:</strong> Sourced from Australian infrastructure occupational shares (Rutovitz et al. 2025), with utility-scale solar shares assumed to approximate minigrid PV.</li>
-              <li><strong>Solar Home Systems (SHS):</strong> Mapped using role-specific breakdowns provided in GOGLA (2024), which is based on direct surveys across West, Central, and East Africa.</li>
-            </ul>
-          </div>
+          <p>
+            <em>Note: Reference or Planned scenarios are used for all countries. In many cases, generation planning is conducted at the regional Power Pool level (e.g., WAPP, EAPP, SAPP) to capture cross-border trade and efficiencies. Where countries appear in multiple, averages are used. In the SPLAT model, the cumulative investments until 2025 are used for Years 1-5, and cumulative investments from 2025 to 2030 are used for Years 6-10. Planed investments beyond 2030 are not considered.</em>
+          </p>
+          <div class="table-caption">Table 2: Generation Technologies</div>
+          <p>Utility-scale generation capacity requirements include:</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Technology</th>
+                <th>Description</th>
+                <th>Deployment Context</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Grid-Scale Solar</td>
+                <td>Utility-scale PV and rooftop solar</td>
+                <td>Centralized generation</td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Wind</td>
+                <td>Onshore wind farms</td>
+                <td>Centralized generation</td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Hydro</td>
+                <td>Large hydropower plants</td>
+                <td>Centralized generation</td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Gas</td>
+                <td>Natural gas combined/open cycle</td>
+                <td>Centralized generation</td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Coal</td>
+                <td>Coal power plants</td>
+                <td>Centralized generation</td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Storage</td>
+                <td>Pumped hydro storage</td>
+                <td>Grid balancing</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>2.3 Employment Factors (Jobs per MW or KM)</h3>
+          <ul>
+            <li><strong>Grid Extension:</strong> Derived from Australian renewable energy infrastructure employment studies (Rutovitz et al. 2025), validated against past projects and projections in South Africa (NBI 2024).</li>
+            <li><strong>Mini-grids:</strong> Calculated from Power for All (2022), which is based on direct surveys across Kenya, Ethiopia, Nigeria, and Uganda. Splits between construction/installation and operations/maintenance are sourced from IRENA (2024) case study on Kenyan mini-grids.</li>
+            <li><strong>Solar Home Systems:</strong> Calculated from GOGLA (2024), which is based on direct surveys across West, Central, and East Africa.</li>
+            <li><strong>Grid-Scale Generation:</strong> Sourced from Rutovitz et al. (2025) for utility-scale solar, wind, hydro, gas, and coal technologies. Values are adjusted for Sub-Saharan African context using productivity multipliers from Ram et al. (2020): 5.00× for Years 1-5 and 4.54× for Years 6-10.</li>
+          </ul>
+          <h3>2.4 Occupational Shares (Job Distribution by Role)</h3>
+          <ul>
+            <li><strong>Grid Extension, Mini-grids, and Generation:</strong> Sourced from Australian infrastructure occupational shares (Rutovitz et al. 2025), with utility-scale solar shares assumed to approximate mini-grid PV and grid-scale generation technologies.</li>
+            <li><strong>Solar Home Systems (SHS):</strong> Mapped using role-specific breakdowns provided in GOGLA (2024), which is based on direct surveys across West, Central, and East Africa.</li>
+          </ul>
           <h2>3. Workforce Requirement Calculation</h2>
-          <p>Once the data is collected, two steps are needed to compute workforce needs for each country:</p>
-          <h3>Step 1. Estimate infrastructure needed to reach 100% access</h3>
-          <p>For each 5-year period (Years 1-5 and Years 6-10):</p>
+          <p>The workforce calculation follows a standardized approach across both stages:</p>
+          <h3>Step 1. Estimate infrastructure needed</h3>
+          <p><strong>Access:</strong> For each 5-year period (Years 1-5 and Years 6-10):</p>
           <ul>
             <li>
               <strong>Grid Extension:</strong>
                Sum of line additions (KM) by voltage level (LV, MV, HV)
             </li>
             <li>
-              <strong>Minigrids &amp; Standalone Solar:</strong>
+              <strong>Mini-grids &amp; Standalone Solar:</strong>
                Sum of new capacity additions (MW) by technology
             </li>
           </ul>
-          <h3>Step 2. Compute workforce needed to build required infrastructure</h3>
-          <p>The core formula for calculating workforce needs:</p>
+          <p><strong>Generation:</strong> For each 5-year period:</p>
+          <ul>
+            <li>
+              <strong>Years 1-5 Capacity:</strong>
+               Total utility-scale generation capacity (MW) required (sourced from SPLAT cumulative 2025 projections)
+            </li>
+            <li>
+              <strong>Years 6-10 Capacity:</strong>
+               Additional capacity (MW) required (sourced from SPLAT incremental 2025-2030 projections)
+            </li>
+          </ul>
+          <h3>Step 2. Compute workforce needed</h3>
+          <p>The core formula for calculating workforce needs is consistent across stages. Note that regional productivity adjustments for generation are already incorporated into the employment factors used.</p>
           <div class="formula">Annual Jobs Required = Capacity Required × Employment Factor × Occupational Share</div>
           <p>
             <strong>Where:</strong>
@@ -508,11 +608,11 @@
           <ul>
             <li>
               <strong>Capacity Required:</strong>
-               KM of LV/MV/HV lines for grid extension or MW of capacity for minigrids &amp; standalone solar
+               KM of lines for grid extension or MW of capacity for generation/mini-grids/standalone solar
             </li>
             <li>
-              <strong>Employent Factor:</strong>
-               Technology-specific jobs per unit (jobs/MW or jobs/KM)
+              <strong>Employment Factor:</strong>
+               Technology-specific jobs per unit (jobs/MW or jobs/KM), adjusted for regional productivity
             </li>
             <li>
               <strong>Occupational Share:</strong>
@@ -522,11 +622,11 @@
           <h2>4. Skill Level Classification</h2>
           <p>A taxonomy is built using Perplexity Deep Research to map each job role to a skill tier using the International Standard Classification of Occupations (ISCO-08) and International Standard Classification of Education (ISCED-11) frameworks.</p>
           <h3>Step 1: Job Role Identification</h3>
-          <p>50 job roles across the energy access value chain are identified:</p>
+          <p>50 job roles across the energy access and generation value chain are identified:</p>
           <ul>
             <li>
-              <strong>Grid Extension &amp; Minigrids:</strong>
-               Occupational categories from Rutovitz et al. (2025), including roles in transmission &amp; distribution, and utility-scale solar, wind, and hydro
+              <strong>Grid Extension, Mini-grids, and Generation:</strong>
+               Occupational categories from Rutovitz et al. (2025), including roles in transmission &amp; distribution, and utility-scale solar, wind, hydro, gas, and coal
             </li>
             <li>
               <strong>Solar Home Systems:</strong>
@@ -564,7 +664,7 @@
                The resulting single ISCED levels were consolidated into four tiers based on the distribution: ISCED 1–3, ISCED 4, ISCED 5, and ISCED 6–8
             </li>
           </ul>
-          <div class="table-caption">Table 2: Job Role to Skill Tier Taxonomy</div>
+          <div class="table-caption">Table 3: Job Role to Skill Tier Taxonomy</div>
           <p>The table below summarizes how the 50 energy sector jobs map to four skill tiers:</p>
           <table class="data-table">
             <thead>
@@ -609,7 +709,7 @@
             <li>
               <strong>Energy Use:</strong>
                
-              Residential Only
+              Productive Use Included (Health, Education, Small-scale Commercial)
             </li>
             <li>
               <strong>Carbon Pricing:</strong>
@@ -634,12 +734,12 @@
           </ul>
           <p>
             Scenario Code: 
-            <code>0_1_0_0_1_0</code>
+            <code>0_0_0_0_1_0</code>
           </p>
           <h3>5.2 Employment Factors</h3>
-          <p>Employment factors for grid extension are derived from Australian labor market surveys in Rutovitz et al (2025), which is validated against an analysis for South Africa in NBI (2024). Employment factors for off-grid technologies come from Africa-specific studies.</p>
-          <div class="table-caption">Table 3: Grid Extension Employment Factor Calculation</div>
-          <p></p>
+          <h4>5.2.1 Access Stage</h4>
+          <p>Employment factors for grid extension are derived from Australian labor market surveys in Rutovitz et al (2025), validated against an analysis for South Africa in NBI (2024). Employment factors for off-grid technologies come from Africa-specific studies.</p>
+          <div class="table-caption">Table 4: Grid Extension Employment Factor Calculation</div>
           <table class="data-table">
             <thead>
               <tr>
@@ -682,8 +782,8 @@
           <p>
             <em>Note: This aligns with estimates from South Africa (NBI 2024), which report 7,300–13,400 gross jobs over 16,000KM of T&amp;D lines = 0.46-0.84 jobs/KM.</em>
           </p>
-          <div class="table-caption">Table 4: Minigrid Employment Factor Calculation</div>
-          <p>Supplemental data from Power for All (2022) survey data (Kenya, Ethiopia, Nigeria, and Uganda) and IRENA (2024) case study on Kenya minigrids:</p>
+          <div class="table-caption">Table 5: Mini-grid Employment Factor Calculation</div>
+          <p>Supplemental data from Power for All (2022) survey data (Kenya, Ethiopia, Nigeria, and Uganda) and IRENA (2024) case study on Kenya mini-grids:</p>
           <table class="data-table">
             <thead>
               <tr>
@@ -708,7 +808,7 @@
                 </td>
               </tr>
               <tr>
-                <td>Total Minigrid Employment Factor (per MW)</td>
+                <td>Total Mini-grid Employment Factor (per MW)</td>
                 <td>Formal + Informal Jobs</td>
                 <td>
                   <strong>151.1</strong>
@@ -730,7 +830,7 @@
               </tr>
             </tbody>
           </table>
-          <div class="table-caption">Table 5: Standalone Solar Employment Factor Calculation</div>
+          <div class="table-caption">Table 6: Standalone Solar Employment Factor Calculation</div>
           <p>Calculated from GOGLA (2024), averaged across West, Central, and East Africa:</p>
           <table class="data-table">
             <thead>
@@ -778,7 +878,7 @@
               </tr>
               <tr>
                 <td>Total SHS Employment Factor (per MW)</td>
-                <td>Jobs per Watt × 1,000,000</td>
+                <td>Jobs Per System / System Size</td>
                 <td>
                   <strong>441.5</strong>
                 </td>
@@ -802,44 +902,220 @@
           <p>
             <em>Note: GOGLA (2024) is more conservative than Power for All (2022) survey data (Kenya, Ethiopia, Nigeria, and Uganda), which yields an analogous employment factor of 1046.3 jobs/MW. Unlike Power for All (2022), GOGLA (2024) accounts for differing factors between cash vs. PAYGo systems.</em>
           </p>
-          <h3>5.3 Occupational Breakdown</h3>
-          <p>The occupation distribution within each job (managers, engineers, technicians, etc.) is specified by Rutovitz et al (2025) for grid extension, utility-scale solar, on-shore wind, and hydro. 
-                                      The latter three are used for solar hybrid minigrid, wind hybrid minigrid, and hydro minigrid, respectively.</p>
-          <p>For standalone solar, GOGLA (2024) provides a general occupational breakdown, which is mapped to specific skill categories and phases for the SHS workforce. GOGLA roles that cover both C&amp;I and O&amp;M are split 50/50 between each phase. This results in a total C&amp;amp;I share of 82.3%, in line with the minigrid figure of 77.2%</p>
-          <h3>5.4 Annualization</h3>
+          <p></p>
+          <h4>5.2.2 Generation Stage</h4>
+          <p>Employment factors for utility-scale generation are derived from Rutovitz et al (2025) and adjusted using regional productivity multipliers from Ram et al. (2020) for Sub-Saharan Africa.</p>
+          <div class="table-caption">Table 7: Grid-Scale Generation Employment Factors (Adjusted for Productivity)</div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Technology</th>
+                <th>Data Source</th>
+                <th>Years 1-5 Total Jobs/MW</th>
+                <th>Years 6-10 Total Jobs/MW</th>
+                <th>C&amp;I Share</th>
+                <th>O&amp;M Share</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Grid-Scale Solar</td>
+                <td>Rutovitz et al (2025)</td>
+                <td>
+                  <strong>8.5</strong>
+                </td>
+                <td>
+                  <strong>7.7</strong>
+                </td>
+                <td>
+                  <strong>95%</strong>
+                </td>
+                <td>
+                  <strong>5%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Wind</td>
+                <td>Rutovitz et al (2025)</td>
+                <td>
+                  <strong>14.3</strong>
+                </td>
+                <td>
+                  <strong>13.0</strong>
+                </td>
+                <td>
+                  <strong>93%</strong>
+                </td>
+                <td>
+                  <strong>7%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Hydro</td>
+                <td>Rutovitz et al (2025)</td>
+                <td>
+                  <strong>37.5</strong>
+                </td>
+                <td>
+                  <strong>34.1</strong>
+                </td>
+                <td>
+                  <strong>98%</strong>
+                </td>
+                <td>
+                  <strong>2%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Gas</td>
+                <td>Rutovitz et al (2025)</td>
+                <td>
+                  <strong>7.1</strong>
+                </td>
+                <td>
+                  <strong>6.4</strong>
+                </td>
+                <td>
+                  <strong>90%</strong>
+                </td>
+                <td>
+                  <strong>10%</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Coal</td>
+                <td>Rutovitz et al (2025)</td>
+                <td>
+                  <strong>56.5</strong>
+                </td>
+                <td>
+                  <strong>51.3</strong>
+                </td>
+                <td>
+                  <strong>98%</strong>
+                </td>
+                <td>
+                  <strong>2%</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p><em>Note: These values reflect the base Rutovitz et al. (2025) factors multiplied by the Ram et al. (2020) regional productivity adjustment: 5.00× for Years 1-5 and 4.54× for Years 6-10.</em></p>
+          <h3>5.3 Investment Costs</h3>
+          <h4>5.3.1 Access Stage</h4>
+          <p>Investment costs are calculated directly from GEP model outputs, which include technology-specific overnight capital costs for grid extension, mini-grids, and standalone solar systems.</p>
+          <h4>5.3.2 Generation Stage</h4>
+          <p>Investment costs for utility-scale generation are derived from IRENA (2019b) data for Eastern and Southern Africa.</p>
+          <div class="table-caption">Table 8: Grid-Scale Generation Investment Costs (USD per kW)</div>
+          <p>Overnight capital costs are technology-specific and vary by country and time period. Representative values for Sub-Saharan Africa (IRENA 2019b):</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Technology</th>
+                <th>Years 1-5</th>
+                <th>Years 6-10</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Grid-Scale Solar</td>
+                <td>
+                  <strong>984</strong>
+                </td>
+                <td>
+                  <strong>886</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Wind</td>
+                <td>
+                  <strong>1,191</strong>
+                </td>
+                <td>
+                  <strong>1,087</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Hydro</td>
+                <td>
+                  <strong>3,000</strong>
+                </td>
+                <td>
+                  <strong>3,000</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Gas</td>
+                <td>
+                  <strong>1,014</strong>
+                </td>
+                <td>
+                  <strong>1,014</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Grid-Scale Coal</td>
+                <td>
+                  <strong>3,739</strong>
+                </td>
+                <td>
+                  <strong>3,739</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <em>Note: Costs vary significantly by country depending on local conditions, project size, and financing terms. Country-specific costs from IRENA database are used when available.</em>
+          </p>
+          <h3>5.4 Occupational Breakdown</h3>
+          <p>The occupation distribution within each job (managers, engineers, technicians, etc.) is specified by Rutovitz et al (2025) for grid extension, utility-scale solar, onshore wind, hydro, gas, and coal. The same occupational shares are used across both Access and Generation stages for comparable technologies (e.g., utility-scale solar shares are used for mini-grid PV and grid-scale solar).</p>
+          <p>For standalone solar, GOGLA (2024) provides a general occupational breakdown, which is mapped to specific skill categories and phases for the SHS workforce. GOGLA roles that cover both C&amp;I and O&amp;M are split 50/50 between each phase. This results in a total C&amp;I share of 82.3%, in line with the mini-grid figure of 77.2%.</p>
+          <h3>5.5 Annualization</h3>
           <p>Critical distinction in workforce calculations:</p>
           <ul>
-            <li><strong>Construction &amp; Installation jobs:</strong> Total job-years are divided by the 5-year construction period to get annual FTE requirements. For example, if building 10 MW requires 1000 job-years, this translates to 200 FTE/year over 5 years.</li>
-            <li><strong>Operations &amp; Maintenance jobs:</strong> Already expressed as annual jobs per MW of installed capacity. These are ongoing positions for the lifetime of the asset.</li>
-            <li><strong>Cumulative O&amp;M:</strong> For Years 6-10, O&amp;M jobs reflect the cumulative installed capacity from both periods (Years 1-5 + Years 6-10).</li>
+            <li><strong>Construction & Installation (C&I):</strong> Total job-years are divided by the 5-year construction period to get annual FTE requirements. For example, if building 10 MW of Hydro capacity requires 1,000 job-years, this translates to 200 FTE/year over 5 years.</li>
+            <li><strong>Operations & Maintenance (O&M):</strong> Already expressed as annual jobs per MW of installed capacity: these are ongoing positions for the lifetime of the asset. For Years 6-10, O&M jobs reflect the cumulative installed capacity from both periods (Years 1-5 + Years 6-10).</li>
           </ul>
           <h2>6. Key Assumptions &amp; Limitations</h2>
           <h3>Assumptions</h3>
           <ul>
             <li>Employment factors do not fall with time (low productivity increase scenario).</li>
-            <li>Construction period is 5 years for each capacity addition phase.</li>
+            <li>Construction period is 5 years for each capacity addition phase as modeled by GEP (2025) and IRENA (2019a).</li>
             <li>Occupational distributions remain stable across the projection period.</li>
-            <li>No country-specific productivity adjustment: all employment factors come from or are validated against Africa-specific estimates.</li>
+            <li>Regional productivity adjustments for Generation stage (5.00× for Years 1-5, 4.54× for Years 6-10) are applied uniformly across all Sub-Saharan African countries.</li>
+            <li>Country-specific generation investment costs are used when available; otherwise global averages are applied.</li>
           </ul>
           <h3>Limitations</h3>
           <ul>
-            <li>The model is based on infrastructure required to provide energy access; jobs required for generation are excluded.</li>
-            <li>Employment factors and skill tiers are Africa-specific, but may not fully capture local labor market conditions across and within African countries.</li>
+            <li>Employment factors and skill tiers are Africa-specific, but may not fully capture local labor market conditions within individual African countries.</li>
             <li>Manufacturing jobs are excluded (focus on deployment only).</li>
+            <li>The analysis assumes generation capacity additions occur to meet demand from universal access; actual generation expansion may differ based on existing capacity and demand growth rates.</li>
+            <li>Productivity multipliers are based on regional averages and may not reflect country-specific conditions.</li>
           </ul>
           <h2>7. References</h2>
           <ul>
             <li>
-              GEP (2025). 
-              <em>World Bank Global Electrification Platform</em>
+              GEP (2025). Climate Scenario Results from the
+              <em>World Bank Global Electrification Platform.</em>
             </li>
             <li>
               GOGLA (2024). Employer survey data from 
-              <em>Off-Grid Solar: A Growth Engine for Jobs, 2024</em>
+              <em>Off-Grid Solar: A Growth Engine for Jobs, 2024.</em>
+            </li>
+            <li>
+              IRENA (2019a). 
+              <em>System Planning and Least-cost Analytics Tool (SPLAT)</em>
+               generation capacity projections.
+            </li>
+            <li>
+              IRENA (2019b). 
+              <em>Planning and prospects for renewable power: Eastern and Southern Africa.</em>
             </li>
             <li>
               IRENA (2024). Direct jobs in Kenyan mini-grid development from 
-              <em>Renewable Energy and Jobs</em>
+              <em>Renewable Energy and Jobs; </em>
+              Generation cost data from 
+              <em>Renewable Power Generation Costs database.</em>
             </li>
             <li>
               NBI (2024). 
@@ -847,8 +1123,12 @@
             </li>
             <li>
               Power for All (2022). 
-              <em>Powering Jobs Census</em>
-              .
+              <em>Powering Jobs Census.</em>
+            </li>
+            <li>
+              Ram et al. (2020). Job creation during the global energy transition towards 100% renewable power system by 2050. 
+              <em>Technological Forecasting and Social Change</em>
+              , 151, 119682.
             </li>
             <li>
               Rutovitz et al (2025). Updated employment factors and occupational shares for the energy transition. 
@@ -859,6 +1139,15 @@
       </div>
     </div>
     <script>
+        // Store summary data for each stage
+        const summaryData = {
+          combined: {"stat1_label":"Population to Connect","stat1_value":"23.6 Million","total_cost":"$9.4 Billion","total_jobs":"80,085"},
+          td: {"stat1_label":"Population to Connect","stat1_value":"23.6 Million","total_cost":"$7.0 Billion","total_jobs":"73,226"},
+          gen: {"stat1_label":"Capacity to Build","stat1_value":"1.1 GW","total_cost":"$2.4 Billion","total_jobs":"6,859"}
+        };
+        
+        const countryCode = 'mw';
+        
         function showTab(tabName) {
           var contents = document.getElementsByClassName('tab-content');
           for (var i = 0; i < contents.length; i++) {
@@ -874,9 +1163,51 @@
           event.target.classList.add('active');
         }
         
-        function navigateToCountry(countryCode) {
-          window.location.href = 'workforce_dashboard_' + countryCode + '.html';
+        function navigateToCountryAndStage() {
+          const country = document.getElementById('countrySelect').value;
+          const stage = document.getElementById('stageSelect').value;
+          
+          // If changing country, navigate to new country page with current stage
+          if(country !== countryCode) {
+            window.location.href = 'workforce_dashboard_' + country + '.html?stage=' + stage;
+          } else {
+            // Same country, just update stage
+            updateStage(stage);
+          }
         }
+        
+        function updateStage(stage) {
+          // Update summary stats
+          const data = summaryData[stage];
+          if(data && data.stat1_value !== 'N/A') {
+            document.getElementById('stat1Label').textContent = data.stat1_label;
+            document.getElementById('stat1Value').textContent = data.stat1_value;
+            document.getElementById('statCost').textContent = data.total_cost;
+            document.getElementById('statJobs').textContent = data.total_jobs + ' FTE/Year';
+          }
+          
+          // Update plot iframes
+          document.getElementById('costPlot').src = 'plots/cost_pie_' + countryCode + '_' + stage + '.html';
+          document.getElementById('jobsPlot').src = 'plots/jobs_pie_' + countryCode + '_' + stage + '.html';
+          document.getElementById('techStackPlot').src = 'plots/tech_stack_' + countryCode + '_' + stage + '.html';
+          document.getElementById('skillPlot').src = 'plots/skill_bar_overview_' + countryCode + '_' + stage + '.html';
+          document.getElementById('rolePlot').src = 'plots/role_plot_' + countryCode + '_' + stage + '.html';
+          
+          // Update URL without reload
+          const url = new URL(window.location);
+          url.searchParams.set('stage', stage);
+          window.history.pushState({}, '', url);
+        }
+        
+        // On page load, check for stage parameter in URL
+        window.addEventListener('DOMContentLoaded', function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const stage = urlParams.get('stage');
+          if(stage && (stage === 'combined' || stage === 'td' || stage === 'gen')) {
+            document.getElementById('stageSelect').value = stage;
+            updateStage(stage);
+          }
+        });
       </script>
   </body>
 </html>
